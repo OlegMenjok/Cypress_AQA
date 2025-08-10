@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "test": "npx cypress run",
     "cypress:open": "npx cypress open",
     "prettier": "npx prettier --write .",
     "eslint": "eslint . --ext .ts",
