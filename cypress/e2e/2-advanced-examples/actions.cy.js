@@ -1,8 +1,8 @@
 /// <reference types="cypress" />
 
-context('Actions', () => {
+context('Actions tests', () => {
   beforeEach(() => {
-    cy.visit('https://example.cypress.io/commands/actions');
+    cy.visit('https://example.cypress.io/commands/actions')
   });
 
   // https://on.cypress.io/interacting-with-elements
