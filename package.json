@@ -1,0 +1,17 @@
+{
+  "scripts": {
+    "test": "npx cypress run",
+    "cypress:open": "npx cypress open",
+    "prettier": "npx prettier --write .",
+    "eslint": "eslint . --ext .ts",
+    "eslint-fix": "eslint . --fix",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "cypress": "^14.5.4"
+  },
+  "dependencies": {
+    "eslint": "^9.33.0",
+    "prettier": "^3.6.2"
+  }
+}
