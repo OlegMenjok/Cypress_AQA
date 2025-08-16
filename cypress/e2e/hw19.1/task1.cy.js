@@ -18,7 +18,7 @@ describe('Get elements on qaauto space', () => {
 
    
   it('get site link and email', () => {
-    cy.get('.display-4')
+    cy.get('.display-4');
     cy.get('.h4')
    });
 });
