@@ -1,3 +1,5 @@
+import { signupPage } from '../hw20.1/pomSignInPage';
+
 describe('Check registration fields', () => {
   beforeEach(() => {
     cy.visit('https://guest:welcome2qauto@qauto.forstudy.space/');
@@ -5,389 +7,205 @@ describe('Check registration fields', () => {
   });
 
   context('Name', () => {
-    it('check field name | positive | valid name', () => {
-      // Act
-      cy.get('#signupName').type('Oleh');
-
-      // Assert
-      cy.get(
-        'body > ngb-modal-window > div > div > app-signup-modal > div.modal-header',
-      ).click();
+    it('positive | valid name', () => {
+      signupPage.typeName('Oleh');
+      signupPage.clickModalHeader();
       cy.get('.invalid-feedback > :nth-child(1)').should('not.exist');
     });
 
-    it('check field name | negative | name is number and less than 2', () => {
-      // Act
-      cy.get('#signupName').type('1');
-
-      // Assert
-      cy.get(
-        'body > ngb-modal-window > div > div > app-signup-modal > div.modal-header',
-      ).click();
-      cy.get('.invalid-feedback > :nth-child(1)').should(
-        'have.text',
-        'Name is invalid',
-      );
-      cy.get('.invalid-feedback > :nth-child(2)').should(
-        'have.text',
+    it('negative | name is number and less than 2', () => {
+      signupPage.typeName('1');
+      signupPage.clickModalHeader();
+      signupPage.checkErrorMessage(1, 'Name is invalid');
+      signupPage.checkErrorMessage(
+        2,
         'Name has to be from 2 to 20 characters long',
       );
     });
 
-    it('check field name | negative | name is number and more than 20', () => {
-      // Act
-      cy.get('#signupName').type('123456789123456789123');
-
-      // Assert
-      cy.get(
-        'body > ngb-modal-window > div > div > app-signup-modal > div.modal-header',
-      ).click();
-      cy.get('.invalid-feedback > :nth-child(1)').should(
-        'have.text',
-        'Name is invalid',
-      );
-      cy.get('.invalid-feedback > :nth-child(2)').should(
-        'have.text',
+    it('negative | name more than 20', () => {
+      signupPage.typeName('123456789123456789123');
+      signupPage.clickModalHeader();
+      signupPage.checkErrorMessage(1, 'Name is invalid');
+      signupPage.checkErrorMessage(
+        2,
         'Name has to be from 2 to 20 characters long',
       );
     });
 
-    it('check field name | negative | name is number', () => {
-      // Act
-      cy.get('#signupName').type('121');
-
-      // Assert
-      cy.get(
-        'body > ngb-modal-window > div > div > app-signup-modal > div.modal-header',
-      ).click();
-      cy.get('.invalid-feedback > :nth-child(1)').should(
-        'have.text',
-        'Name is invalid',
-      );
+    it('negative | name is number', () => {
+      signupPage.typeName('121');
+      signupPage.clickModalHeader();
+      signupPage.checkErrorMessage(1, 'Name is invalid');
     });
 
-    it('check field name | negative | name empty', () => {
-      // Act
-      cy.get('#signupName').click();
-
-      // Assert
-      cy.get(
-        'body > ngb-modal-window > div > div > app-signup-modal > div.modal-header',
-      ).click();
-      cy.get('.invalid-feedback > :nth-child(1)').should(
-        'have.text',
-        'Name required',
-      );
+    it('negative | name empty', () => {
+      cy.get(signupPage.nameField).click();
+      signupPage.clickModalHeader();
+      signupPage.checkErrorMessage(1, 'Name required');
     });
 
-    it('check field name | negative | name has borber color red', () => {
-      // Act
-      cy.get('#signupName').type('`````');
-
-      // Assert
-      cy.get(
-        'body > ngb-modal-window > div > div > app-signup-modal > div.modal-header',
-      ).click();
-      cy.get('#signupName').should(
+    it('negative | red border when invalid', () => {
+      signupPage.typeName('`````');
+      signupPage.clickModalHeader();
+      cy.get(signupPage.nameField).should(
         'have.css',
         'border-color',
         'rgb(220, 53, 69)',
       );
-      cy.get('.invalid-feedback > :nth-child(1)').should(
-        'have.text',
-        'Name is invalid',
-      );
+      signupPage.checkErrorMessage(1, 'Name is invalid');
     });
   });
 
   context('Lastname', () => {
-    it('check field lastname | positive | valid lastname', () => {
-      // Act
-      cy.get('#signupLastName').type('Menok');
-
-      // Assert
-      cy.get(
-        'body > ngb-modal-window > div > div > app-signup-modal > div.modal-header',
-      ).click();
+    it('positive | valid lastname', () => {
+      cy.get(signupPage.lastNameField).type('Menok');
+      signupPage.clickModalHeader();
       cy.get('.invalid-feedback > :nth-child(1)').should('not.exist');
     });
 
-    it('check field lastname | negative | lastname is number and less than 2', () => {
-      // Act
-      cy.get('#signupLastName').type('1');
-
-      // Assert
-      cy.get(
-        'body > ngb-modal-window > div > div > app-signup-modal > div.modal-header',
-      ).click();
-      cy.get('.invalid-feedback > :nth-child(1)').should(
-        'have.text',
-        'Last name is invalid',
-      );
-      cy.get('.invalid-feedback > :nth-child(2)').should(
-        'have.text',
+    it('negative | lastname less than 2', () => {
+      cy.get(signupPage.lastNameField).type('1');
+      signupPage.clickModalHeader();
+      signupPage.checkErrorMessage(1, 'Last name is invalid');
+      signupPage.checkErrorMessage(
+        2,
         'Last name has to be from 2 to 20 characters long',
       );
     });
 
-    it('check field lastname | negative | lastname is number and more than 20', () => {
-      // Act
-      cy.get('#signupLastName').type('123456789123456789123');
-
-      // Assert
-      cy.get(
-        'body > ngb-modal-window > div > div > app-signup-modal > div.modal-header',
-      ).click();
-      cy.get('.invalid-feedback > :nth-child(1)').should(
-        'have.text',
-        'Last name is invalid',
-      );
-      cy.get('.invalid-feedback > :nth-child(2)').should(
-        'have.text',
+    it('negative | lastname more than 20', () => {
+      cy.get(signupPage.lastNameField).type('123456789123456789123');
+      signupPage.clickModalHeader();
+      signupPage.checkErrorMessage(1, 'Last name is invalid');
+      signupPage.checkErrorMessage(
+        2,
         'Last name has to be from 2 to 20 characters long',
       );
     });
 
-    it('check field lastname | negative | lastname is number', () => {
-      // Act
-      cy.get('#signupLastName').type('121');
-
-      // Assert
-      cy.get(
-        'body > ngb-modal-window > div > div > app-signup-modal > div.modal-header',
-      ).click();
-      cy.get('.invalid-feedback > :nth-child(1)').should(
-        'have.text',
-        'Last name is invalid',
-      );
+    it('negative | lastname is number', () => {
+      cy.get(signupPage.lastNameField).type('121');
+      signupPage.clickModalHeader();
+      signupPage.checkErrorMessage(1, 'Last name is invalid');
     });
 
-    it('check field lastname | negative | lastname empty', () => {
-      // Act
-      cy.get('#signupLastName').click();
-
-      // Assert
-      cy.get(
-        'body > ngb-modal-window > div > div > app-signup-modal > div.modal-header',
-      ).click();
-      cy.get('.invalid-feedback > :nth-child(1)').should(
-        'have.text',
-        'Last name required',
-      );
+    it('negative | lastname empty', () => {
+      cy.get(signupPage.lastNameField).click();
+      signupPage.clickModalHeader();
+      signupPage.checkErrorMessage(1, 'Last name required');
     });
 
-    it('check field lastname | negative | lastname has borber color red', () => {
-      // Act
-      cy.get('#signupLastName').type('`````');
-
-      // Assert
-      cy.get(
-        'body > ngb-modal-window > div > div > app-signup-modal > div.modal-header',
-      ).click();
-      cy.get('#signupLastName').should(
+    it('negative | red border when invalid', () => {
+      cy.get(signupPage.lastNameField).type('`````');
+      signupPage.clickModalHeader();
+      cy.get(signupPage.lastNameField).should(
         'have.css',
         'border-color',
         'rgb(220, 53, 69)',
       );
-      cy.get('.invalid-feedback > :nth-child(1)').should(
-        'have.text',
-        'Last name is invalid',
-      );
+      signupPage.checkErrorMessage(1, 'Last name is invalid');
     });
   });
 
   context('Email', () => {
-    it('check field email | positive | valid email', () => {
-      // Act
-      cy.get('#signupEmail').type('olehmenok@gmail.com');
-
-      // Assert
-      cy.get(
-        'body > ngb-modal-window > div > div > app-signup-modal > div.modal-header',
-      ).click();
+    it('positive | valid email', () => {
+      signupPage.typeEmail('olehmenok@gmail.com');
+      signupPage.clickModalHeader();
       cy.get('.invalid-feedback > :nth-child(1)').should('not.exist');
     });
 
-    it('check field email | negative | email without ravlyka', () => {
-      // Act
-      cy.get('#signupEmail').type('testgmail.com');
-
-      // Assert
-      cy.get(
-        'body > ngb-modal-window > div > div > app-signup-modal > div.modal-header',
-      ).click();
-      cy.get('.invalid-feedback > :nth-child(1)').should(
-        'have.text',
-        'Email is incorrect',
-      );
+    it('negative | email without @', () => {
+      signupPage.typeEmail('testgmail.com');
+      signupPage.clickModalHeader();
+      signupPage.checkErrorMessage(1, 'Email is incorrect');
     });
 
-    it('check field email | negative | email empty', () => {
-      // Act
-      cy.get('#signupEmail').click();
-
-      // Assert
-      cy.get(
-        'body > ngb-modal-window > div > div > app-signup-modal > div.modal-header',
-      ).click();
-      cy.get('.invalid-feedback > :nth-child(1)').should(
-        'have.text',
-        'Email required',
-      );
+    it('negative | email empty', () => {
+      cy.get(signupPage.emailField).click();
+      signupPage.clickModalHeader();
+      signupPage.checkErrorMessage(1, 'Email required');
     });
 
-    it('check field email | negative | email has borber color red', () => {
-      // Act
-      cy.get('#signupEmail').type(
-        'verryloooooooooongstringggggggggggggggggggggggggggggggggggggg',
-      );
-
-      // Assert
-      cy.get(
-        'body > ngb-modal-window > div > div > app-signup-modal > div.modal-header',
-      ).click();
-      cy.get('#signupEmail').should(
+    it('negative | email has red border', () => {
+      signupPage.typeEmail('verryloooooooooongstringgggggggggggggggggggggg');
+      signupPage.clickModalHeader();
+      cy.get(signupPage.emailField).should(
         'have.css',
         'border-color',
         'rgb(220, 53, 69)',
       );
-      cy.get('.invalid-feedback > :nth-child(1)').should(
-        'have.text',
-        'Email is incorrect',
-      );
+      signupPage.checkErrorMessage(1, 'Email is incorrect');
     });
   });
 
   context('Password', () => {
-    it('check field password | positive | valid password', () => {
-      // Act
-      cy.get('#signupPassword').type('superSecret123', { sensitive: true });
-
-      // Assert
-      cy.get(
-        'body > ngb-modal-window > div > div > app-signup-modal > div.modal-header',
-      ).click();
+    it('positive | valid password', () => {
+      signupPage.typePassword('superSecret123');
+      signupPage.clickModalHeader();
       cy.get('.invalid-feedback > :nth-child(1)').should('not.exist');
     });
 
-    it('check field password | negative | password without validation', () => {
-      // Act
-      cy.get('#signupPassword').type('123', { sensitive: true });
-
-      // Assert
-      cy.get(
-        'body > ngb-modal-window > div > div > app-signup-modal > div.modal-header',
-      ).click();
-      cy.get('.invalid-feedback > :nth-child(1)').should(
-        'have.text',
+    it('negative | too short password', () => {
+      signupPage.typePassword('123');
+      signupPage.clickModalHeader();
+      signupPage.checkErrorMessage(
+        1,
         'Password has to be from 8 to 15 characters long and contain at least one integer, one capital, and one small letter',
       );
     });
 
-    it('check field password | negative | password empty', () => {
-      // Act
-      cy.get('#signupPassword').click();
-
-      // Assert
-      cy.get(
-        'body > ngb-modal-window > div > div > app-signup-modal > div.modal-header',
-      ).click();
-      cy.get('.invalid-feedback > :nth-child(1)').should(
-        'have.text',
-        'Password required',
-      );
+    it('negative | password empty', () => {
+      cy.get(signupPage.passwordField).click();
+      signupPage.clickModalHeader();
+      signupPage.checkErrorMessage(1, 'Password required');
     });
 
-    it('check field password | negative | password has borber color red', () => {
-      // Act
-      cy.get('#signupPassword').type(
-        'verryloooooooooongstringggggggggggggggggggggggggggggggggggggg',
-      );
-
-      // Assert
-      cy.get(
-        'body > ngb-modal-window > div > div > app-signup-modal > div.modal-header',
-      ).click();
-      cy.get('#signupPassword').should(
+    it('negative | password red border', () => {
+      signupPage.typePassword('verryloooooooooongstringggggggggggggggggggg');
+      signupPage.clickModalHeader();
+      cy.get(signupPage.passwordField).should(
         'have.css',
         'border-color',
         'rgb(220, 53, 69)',
       );
-      cy.get('.invalid-feedback > :nth-child(1)').should(
-        'have.text',
+      signupPage.checkErrorMessage(
+        1,
         'Password has to be from 8 to 15 characters long and contain at least one integer, one capital, and one small letter',
       );
     });
   });
 
   context('Password re-enter', () => {
-    it('check field password re-enter | positive | valid re-enter password', () => {
-      // Arrange
-      cy.get('#signupPassword').type('superSecret123', { sensitive: true });
-
-      // Act
-      cy.get('#signupRepeatPassword').type('superSecret123', {
-        sensitive: true,
-      });
-
-      // Assert
-      cy.get(
-        'body > ngb-modal-window > div > div > app-signup-modal > div.modal-header',
-      ).click();
+    it('positive | valid repeat password', () => {
+      signupPage.typePassword('superSecret123');
+      signupPage.typeRepeatPassword('superSecret123');
+      signupPage.clickModalHeader();
       cy.get('.invalid-feedback > :nth-child(1)').should('not.exist');
     });
 
-    it('check field password | negative | invalid re-enter password', () => {
-      // Arrange
-      cy.get('#signupPassword').type('superSecret123', { sensitive: true });
-
-      // Act
-      cy.get('#signupRepeatPassword').type('123', { sensitive: true });
-
-      // Assert
-      cy.get(
-        'body > ngb-modal-window > div > div > app-signup-modal > div.modal-header',
-      ).click();
-      cy.get('.invalid-feedback > :nth-child(1)').should(
-        'have.text',
+    it('negative | repeat password invalid', () => {
+      signupPage.typePassword('superSecret123');
+      signupPage.typeRepeatPassword('123');
+      signupPage.clickModalHeader();
+      signupPage.checkErrorMessage(
+        1,
         'Password has to be from 8 to 15 characters long and contain at least one integer, one capital, and one small letter',
       );
     });
 
-    it('check field password | negative | valid re-enter password but dont match', () => {
-      // Arrange
-      cy.get('#signupPassword').type('superSecret123', { sensitive: true });
-
-      // Act
-      cy.get('#signupRepeatPassword').type('superSecret124', {
-        sensitive: true,
-      });
-
-      // Assert
-      cy.get(
-        'body > ngb-modal-window > div > div > app-signup-modal > div.modal-header',
-      ).click();
-      cy.get('.invalid-feedback > :nth-child(1)').should(
-        'have.text',
-        'Passwords do not match',
-      );
+    it('negative | repeat password does not match', () => {
+      signupPage.typePassword('superSecret123');
+      signupPage.typeRepeatPassword('superSecret124');
+      signupPage.clickModalHeader();
+      signupPage.checkErrorMessage(1, 'Passwords do not match');
     });
 
-    it('check field password | negative | re-enter password has borber color red if it empty', () => {
-      // Arrange
-      cy.get('#signupPassword').type('superSecret123', { sensitive: true });
-
-      // Act
-      cy.get('#signupRepeatPassword').click();
-
-      // Assert
-      cy.get(
-        'body > ngb-modal-window > div > div > app-signup-modal > div.modal-header',
-      ).click();
-      cy.get('.invalid-feedback > :nth-child(1)').should(
-        'have.text',
-        'Re-enter password required',
-      );
+    it('negative | repeat password empty', () => {
+      signupPage.typePassword('superSecret123');
+      cy.get(signupPage.repeatPasswordField).click();
+      signupPage.clickModalHeader();
+      signupPage.checkErrorMessage(1, 'Re-enter password required');
     });
   });
 });

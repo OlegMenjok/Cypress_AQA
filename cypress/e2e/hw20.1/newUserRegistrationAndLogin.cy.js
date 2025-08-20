@@ -1,48 +1,47 @@
 import { getRandomNumber } from '../../utils/helpers';
+import { signupPage } from '../pom/SignupPage';
 
 describe('New user registration and login', () => {
-  const emailAdress = `stress+${getRandomNumber(1, 10000)}@gmail.com`;
+  const emailAddress = `stress${getRandomNumber(1, 10000)}@gmail.com`;
+
   beforeEach(() => {
     cy.visit('https://guest:welcome2qauto@qauto.forstudy.space/');
   });
 
   it('check field name | positive | registration', () => {
     // Arrange
-    cy.get('.hero-descriptor_btn').click();
-    cy.get('#signupName').type('Stress');
-    cy.get('.modal-footer > .btn').should('be.disabled');
+    signupPage.openSignup();
+    signupPage.typeName('Stress');
+    signupPage.checkButtonEnabled(false);
 
-    cy.get('#signupLastName').type('Test');
-    cy.get('.modal-footer > .btn').should('be.disabled');
+    signupPage.typeLastName('Test');
+    signupPage.checkButtonEnabled(false);
 
-    cy.get('#signupEmail').type(emailAdress);
-    cy.get('.modal-footer > .btn').should('be.disabled');
+    signupPage.typeEmail(emailAddress);
+    signupPage.checkButtonEnabled(false);
 
-    cy.get('#signupPassword').type('superSecret123', { sensitive: true });
-    cy.get('.modal-footer > .btn').should('be.disabled');
+    signupPage.typePassword('superSecret123');
+    signupPage.checkButtonEnabled(false);
 
-    cy.get('#signupRepeatPassword').type('superSecret123', { sensitive: true });
-    cy.get('.modal-footer > .btn').should('not.be.disabled');
+    signupPage.typeRepeatPassword('superSecret123');
+    signupPage.checkButtonEnabled(true);
 
     // Act
-    cy.get('.modal-footer > .btn').click();
+    signupPage.clickSubmit();
 
     // Assert
-    cy.get('.alert > p').should('have.text', 'Registration complete');
+    signupPage.checkSuccessMessage('Registration complete');
   });
 
   it('check field name | positive | login', () => {
     // Arrange
-    cy.get('.header_right > .btn').click();
+    cy.get(signupPage.loginButton).click();
     cy.login();
 
     // Act
     cy.get('.modal-footer > .btn-primary').click();
 
     // Assert
-    cy.get('.alert > p').should(
-      'have.text',
-      'You have been successfully logged in',
-    );
+    signupPage.checkSuccessMessage('You have been successfully logged in');
   });
 });
