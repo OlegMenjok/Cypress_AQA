@@ -1,5 +1,5 @@
 import { getRandomNumber } from '../../utils/helpers';
-import { signupPage } from '../pom/SignupPage';
+import { signupPage } from '../hw20.1/pomSignInPage';
 
 describe('New user registration and login', () => {
   const emailAddress = `stress${getRandomNumber(1, 10000)}@gmail.com`;

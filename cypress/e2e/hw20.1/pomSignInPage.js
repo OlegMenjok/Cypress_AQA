@@ -50,7 +50,9 @@ class SignupPage {
   }
 
   checkButtonEnabled(enabled = true) {
-    cy.get(this.submitButton).should(enabled ? 'not.be.disabled' : 'be.disabled');
+    cy.get(this.submitButton).should(
+      enabled ? 'not.be.disabled' : 'be.disabled',
+    );
   }
 
   checkSuccessMessage(text) {
