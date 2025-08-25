@@ -2,6 +2,8 @@
   "type": "module",
   "scripts": {
     "test": "npx cypress run",
+    "cy:normal": "npx cypress open --config-file cypress1.config.js",
+    "cy:bug": "npx cypress open --config-file cypress2.config.js",
     "cypress:open": "npx cypress open",
     "prettier": "npx prettier --write .",
     "eslint": "eslint . --ext .ts",

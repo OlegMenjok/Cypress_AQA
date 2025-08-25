@@ -40,6 +40,6 @@ Cypress.Commands.overwrite('type', (originalFn, element, text, options) => {
 });
 
 Cypress.Commands.add('login', () => {
-  cy.get('#signinEmail').type('stress+4337@gmail.com');
-  cy.get('#signinPassword').type('superSecret123', { sensitive: true });
+  cy.get('#signinEmail').type(Cypress.env('email'));
+  cy.get('#signinPassword').type(Cypress.env('password'));
 });
