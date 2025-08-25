@@ -6,7 +6,7 @@ describe('New user registration and login', () => {
     cy.visit('/');
   });
 
-  it.only('check field name | positive | login', () => {
+  it('Create new car | add expense', () => {
     // Arrange
     cy.get(signupPage.loginButton).click();
     cy.login();
