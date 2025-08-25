@@ -6,7 +6,7 @@ describe('New user registration and login', () => {
     cy.visit('/');
   });
 
-  it('Create new car | add expense', () => {
+  it('Create new car | add expense | success', () => {
     // Arrange
     cy.get(signupPage.loginButton).click();
     cy.login();

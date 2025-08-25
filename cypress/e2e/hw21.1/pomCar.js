@@ -36,12 +36,15 @@ class AddCar {
   typeExpenseLiters(litters) {
     cy.get(this.addExpenseLiters).type(litters);
   }
+
   typeExpenseTotalCost(cost) {
     cy.get(this.addExpenseTotalCost).type(cost);
   }
+
   clearAndTypeCarMillage(millage) {
     cy.get(this.addExpenseMileage).clear().type(millage);
   }
+  
   checkSuccessMessage(text) {
     cy.get(this.successMessage).should('have.text', text);
   }
