@@ -1,7 +1,7 @@
 import { addCar } from '../hw21.1/pomCar';
 import { signupPage } from '../hw20.1/pomSignInPage';
 
-describe('New user registration and login', () => {
+describe('Car', () => {
   beforeEach(() => {
     cy.visit('/');
   });

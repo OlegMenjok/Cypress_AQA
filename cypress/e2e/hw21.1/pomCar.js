@@ -44,7 +44,7 @@ class AddCar {
   clearAndTypeCarMillage(millage) {
     cy.get(this.addExpenseMileage).clear().type(millage);
   }
-  
+
   checkSuccessMessage(text) {
     cy.get(this.successMessage).should('have.text', text);
   }
