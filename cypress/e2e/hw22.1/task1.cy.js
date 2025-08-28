@@ -27,7 +27,7 @@ describe('Car', () => {
       carId = interception.response.body.data.id;
     });
 
-    cy.request(`/api/cars`).then((res2) => {
+    cy.request('/api/cars').then((res2) => {
       expect(res2.status).to.eq(200);
       console.log('res2', res2.body.data);
 
@@ -37,7 +37,7 @@ describe('Car', () => {
 
   it('Autorize into system | add expense via api', () => {
     // Arrange
-     cy.request('POST', '/api/auth/signin', {
+    cy.request('POST', '/api/auth/signin', {
       email: Cypress.env('email'),
       password: Cypress.env('password'),
       remember: true,
