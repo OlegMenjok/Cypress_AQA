@@ -28,6 +28,16 @@ jobs:
       - name: Disable Husky for CI
         run: npm config set ignore-scripts true
 
+      - name: Cache node_modules & Cypress binary
+        uses: actions/cache@v4
+        with:
+          path: |
+            **/node_modules
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
       - name: Install dependencies
         run: npm ci
 
