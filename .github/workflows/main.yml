@@ -1,0 +1,26 @@
+name: Cypress E2E
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+    branches: ['**']
+  workflow_dispatch: {}
+
+jobs:
+  cypress:
+    runs-on: ubuntu-22.04
+
+    container:
+      image: cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1
+      options: --ipc=host
+
+    env:
+      CYPRESS_CACHE_FOLDER: ~/.cache/Cypress
+      NODE_OPTIONS: --max_old_space_size=4096
+
+      BASE_URL: https://guest:welcome2qauto@qauto.forstudy.space
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
